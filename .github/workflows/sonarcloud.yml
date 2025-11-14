@@ -1,4 +1,5 @@
 name: CI - Build and SonarCloud
+
 on:
   push:
     branches: ["main", "master"]
@@ -8,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,8 +34,9 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn -B sonar:sonar \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.organization=raghadsemaih \
+          mvn -B \
             -Dsonar.projectKey=RaghadSemaih_Quality \
-            -Dsonar.login=${SONAR_TOKEN}
+            -Dsonar.organization=raghadsemaih \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONAR_TOKEN \
+            sonar:sonar
